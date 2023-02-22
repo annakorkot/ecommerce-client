@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { productApi } from './apis/productsApi';
 import cartReducer from "./slices/cartSlice";
-import { addProduct , removeProduct } from "./slices/cartSlice";
+import { addProduct , removeProduct ,decrementQuantity,incrementQuantity} from "./slices/cartSlice";
 
 const appStore = configureStore({
     reducer: {
@@ -17,5 +17,5 @@ const appStore = configureStore({
 setupListeners(appStore.dispatch);
 
 export default appStore;
-export { addProduct ,removeProduct };
+export { addProduct ,removeProduct ,incrementQuantity,decrementQuantity };
 export { useFetchProductsQuery } from './apis/productsApi'
