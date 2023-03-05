@@ -1,7 +1,7 @@
 import React from 'react'
 import { useFetchProductsQuery } from '../redux/store'
 import { useDispatch } from 'react-redux';
-import { addProduct ,incrementQuantity,decrementQuantity} from '../redux/store';
+import { addProduct } from '../redux/store';
 
 function ProductList() {
   const dispatch = useDispatch();
@@ -43,48 +43,9 @@ function ProductList() {
           <div className="p-4 flex flex-col items-center">
             <h1 className="text-gray-800 text-center mt-1">{product.productname}</h1>
             <p className="text-gray-400 font-light text-xs text-center">{product.description}</p>
-            <p className="text-center text-gray-800 mt-1">{product.price}</p>
+            <p className="text-center text-gray-800 mt-1">{product.price} $</p>
             <div className="inline-flex items-center mt-2">
-              {/* <button
-              
-                className="bg-white rounded-l border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 inline-flex items-center px-2 py-1 border-r border-gray-200">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M20 12H4"
-                  />
-                </svg>
-              </button> */}
-              {/* <div
-                className="bg-gray-100 border-t border-b border-gray-100 text-gray-600 hover:bg-gray-100 inline-flex items-center px-4 py-1 select-none">
-                
-              </div> */}
-              {/* <button
-                className="bg-white rounded-r border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 inline-flex items-center px-2 py-1 border-r border-gray-200"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 4v16m8-8H4"
-                  />
-                </svg>
-              </button> */}
+
             </div>
 
             <button onClick={() =>

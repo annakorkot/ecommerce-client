@@ -7,21 +7,20 @@ import CartItem from './CartItem'
 function Cart() {
   // const [open, setOpen] = useState(true) 
   const cart = useSelector((state) =>
-  
   state.cart);
-
   console.log(cart)
-  // function ProductList() {
-  //  
-  //   const cartItem = useSelector((state)=>{
-  //       return state.cart
-  //   });
 
-  //   const handleProductAdd = (product) =>{
-  //       dispatch(addProduct(product))
-  //   };
+  const getTotal = () => {
+    let totalQuantity = 0
+    let totalPrice = 0
+    cart.forEach(item => {
+      totalQuantity += item.quantity
+      totalPrice += item.price * item.quantity
+    })
+    return {totalPrice, totalQuantity}
+  }
 
-  // }
+ 
 
 
   return (
@@ -59,9 +58,13 @@ function Cart() {
               </div>
             </li>
           </ul>
+
           <div className="space-y-1 text-right">
-            <p>Total amount:
-              <span className="font-semibold">12 $</span>
+          <p>Total amount:
+              <span className="font-semibold"> {getTotal().totalPrice} $</span>
+            </p>
+            <p>Total items:
+              <span className="font-semibold"> {getTotal().totalQuantity} </span>
             </p>
 
           </div>
