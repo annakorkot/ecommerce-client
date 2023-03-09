@@ -1,19 +1,28 @@
-import React from 'react'
-import { useFetchProductsQuery } from '../redux/store'
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react'
+import { fetchProducts } from '../redux/store'
+import { useDispatch, useSelector } from 'react-redux';
 import { addProduct } from '../redux/store';
 
 function ProductList() {
   const dispatch = useDispatch();
-  const { data, error, isLoading } = useFetchProductsQuery();
+  
+
+const { data, error, isLoading } = useSelector((state=>{
+  return state.products
+}));
+
+useEffect(()=>{
+  dispatch(fetchProducts());
+
+},[dispatch]);
 
   let content;
   if (isLoading) {
-    return <div>is Loading</div>
+    return <h1>is Loading</h1>
   } else if (error) {
-    return <div>Error </div>
+    return <h1>Error </h1>
   } else {
-    content = data.map(product => {
+    content = data.map((product) => {
       return (
 
         <div key={product.id} className="w-80 bg-white shadow rounded mx-10">

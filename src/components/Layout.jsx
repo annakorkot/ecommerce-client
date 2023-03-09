@@ -1,16 +1,16 @@
 import Routing from "./Routing";
-import Navbar from "./Navbar";
+// import Navbar from "./Navbar";
 import Cart from "./Cart";
 import Footer from "./Footer";
-import Login from "./Login";
+// import  AddProduct  from './AddProduct'
 
 function Layout(){
     return (
         <div className="Layout">
-            <Navbar></Navbar>
+            {/* <Navbar></Navbar> */}
             <Cart></Cart>
             <main><Routing></Routing></main>
-            <Login/>
+             
             <Footer></Footer>
         </div>
     );

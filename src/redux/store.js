@@ -1,28 +1,27 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
-import { productApi } from './apis/productsApi';
-import { categoryApi } from "./apis/categoriesApi";
 import cartReducer from "./slices/cartSlice";
-import authReducer from './slices/authSlice'
 import { addProduct , removeProduct ,decrementQuantity,incrementQuantity} from "./slices/cartSlice";
+import { categoriesReducer } from "./slices/categorySlice";
+import { productsReducer } from "./slices/productSlice";
+import { loginReducer } from './slices/userSlice'
 
 const appStore = configureStore({
     reducer: {
-        auth:authReducer,
+        categories: categoriesReducer,
         cart: cartReducer,
-        [productApi.reducerPath] : productApi.reducer,
-        [categoryApi.reducerPath] : categoryApi.reducer
+        users:loginReducer,
+        products:productsReducer
+        
     },
-    middleware : (getDefaultMiddleware) => {
-        return getDefaultMiddleware()
-        .concat(productApi.middleware)
-        .concat(categoryApi.middleware);
-    }
+
 });
 
 setupListeners(appStore.dispatch);
 
+export * from './thunks/productsThunk'
+export * from './thunks/userThunk'
+export * from './thunks/fetchCategories';
 export default appStore;
 export { addProduct ,removeProduct ,incrementQuantity,decrementQuantity };
-export { useFetchProductsQuery } from './apis/productsApi'
-export { useFetchCategoriesQuery } from './apis/categoriesApi'
+
