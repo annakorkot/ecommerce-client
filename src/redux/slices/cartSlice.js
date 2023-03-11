@@ -30,10 +30,16 @@ const cartSlice = createSlice({
         removeProduct(state,action){
             const index = state.cart.indexOf(action.payload);
             state.cart.splice(index,1)
+        },
+        hideCart(state, action) {
+            state.isHidden = true;
+        },
+        showCart(state, action) {
+            state.isHidden = false;
         }
     }
 
 });
 
-export const {addProduct ,removeProduct ,incrementQuantity,decrementQuantity} = cartSlice.actions;
+export const {addProduct ,removeProduct ,incrementQuantity,decrementQuantity, hideCart, showCart} = cartSlice.actions;
 export default cartSlice.reducer;

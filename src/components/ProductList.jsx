@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { fetchProducts } from '../redux/store'
+import { fetchProducts, showCart } from '../redux/store'
 import { useDispatch, useSelector } from 'react-redux';
 import { addProduct } from '../redux/store';
 
@@ -13,14 +13,13 @@ const { data, error, isLoading } = useSelector((state=>{
 
 useEffect(()=>{
   dispatch(fetchProducts());
-
-},[dispatch]);
+},[]);
 
   let content;
   if (isLoading) {
-    return <h1>is Loading</h1>
+    return <div>is Loading</div>
   } else if (error) {
-    return <h1>Error </h1>
+    return <div>Error </div>
   } else {
     content = data.map((product) => {
       return (
@@ -57,11 +56,14 @@ useEffect(()=>{
 
             </div>
 
-            <button onClick={() =>
-              dispatch(addProduct(
-                  product
-              ))
+            <button onClick={() => {
+                dispatch(addProduct(
+                    product
+                ));
+                dispatch(showCart());
+              }
             }
+    
               className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center"
             >
               Add to order

@@ -8,12 +8,10 @@ function Register() {
 
   const dispatch = useDispatch();
 
-
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-
 
   return (
     <section className="bg-gray-50 ">

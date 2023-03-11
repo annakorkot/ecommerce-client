@@ -1,77 +1,62 @@
 import { createSlice } from "@reduxjs/toolkit";
 import jwt_decode from "jwt-decode";
-import { RegisterAsync ,SigninAsync } from '../thunks/userThunk'
+import { RegisterAsync, SigninAsync, getUserDetails } from '../thunks/userThunk'
 
-const initialState ={
-  first_name : "" ,
-  last_name : "" ,
-  email : "" ,
-  token : "",
-  isLogged : false ,
-  
+const initialState = {
+  data: {
+    first_name: "",
+    last_name: "",
+    email: "",
+    token: "",
+  },
+  isLogged: false,
+  isLoading: false,
+  error: null
+
 }
 
-export const loginSlice = createSlice({
-  name: "login",
+export const userSlice = createSlice({
+  name: "user",
   initialState,
   reducers: {
     logout: (state, action) => {
-      state.token = "";
+      state.data.token = "";
+      state.data.isLogged = false;
+      state.data.first_name = "";
+      state.data.last_name = "";
+      state.data.email = "";
       state.isLogged = false;
-      state.first_name = "";
-      state.last_name = "";
-      state.email = "";
     },
   },
-  extraReducers(builder){
+  extraReducers(builder) {
     builder.addCase(SigninAsync.fulfilled, (state, action) => {
-          state.token = action.payload.access;
-          state.isLogged = true;
-          state.email = jwt_decode(action.payload.access).email;
-          
-        
-      });
-      builder.addCase(RegisterAsync.fulfilled, (state, action) => {
-          state.token = action.payload.access
-          state.isLogged = true;
-          state.first_name= jwt_decode(action.payload.access).first_name
-          state.last_name= jwt_decode(action.payload.access).last_name
-          state.email=jwt_decode(action.payload.access).email
-          
-      });
+      state.data.token = action.payload.access;
+      state.isLogged = true;
+      console.log("jwt_decode: ");
+      console.log(jwt_decode(action.payload.access))
+      // state.first_name= jwt_decode(action.payload.access).first_name
+      // state.last_name= jwt_decode(action.payload.access).last_name
+      // state.email=jwt_decode(action.payload.access).email
+    });
+    builder.addCase(RegisterAsync.fulfilled, (state, action) => {
+
+      // state.first_name= jwt_decode(action.payload.access).first_name
+      // state.last_name= jwt_decode(action.payload.access).last_name
+      // state.email=jwt_decode(action.payload.access).email   
+    });
+    builder.addCase(getUserDetails.pending, (action, state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getUserDetails.rejected, (action, state) => {
+      state.error = action.error;
+    })
+    builder.addCase(getUserDetails.fulfilled, (state, action) => {
+      state.data.first_name = action.payload.first_name;
+      state.data.last_name = action.payload.last_name;
+      state.data.email = action.payload.email;
+    })
   },
 });
 
-// export const selectLogged = (state) => state.login.isLogged;
-// export const selectEmail = (state) => {console.log(state); return state.login.email;};
-// export const selectUserName = (state) => state.login.first_name;
-// export const selectUserLastName = (state) => state.login.last_name;
-// export const selectToken = (state) => state.login.token;
-// export const selectStaff = (state) => state.login.staff;
-
-export const loginReducer = loginSlice.reducer;
-
-// const initialState = {
-//   isAuthenticated : false,
-//   user:null,
-//   token: null,
-//   loading :false,
-//   registered :false,
-// }
-
-// const userSlice = createSlice({
-//   name: 'user',
-//   initialState,
-//   reducers: {
-//     resetRegistered :state => {
-//       state.registered = false ;
-//     },
-
-//   },
-//   extraReducers: {},
-// })
-
-
-
-// export const { resetRegistered } = userSlice.actions
-// export default userSlice.reducer
+export const {logout} = userSlice.actions;
+export default userSlice.reducer;
