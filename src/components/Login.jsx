@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { SigninAsync } from '../redux/thunks/userThunk';
 
 function Login() {
@@ -10,10 +10,9 @@ function Login() {
 
     async function doLogin() {
         await dispatch(SigninAsync({email:Logemail,password:password}));
-        navigate('/profile')
+        navigate('/profile');
     }
     
-    const user = useSelector((state) => state.user);
     const [Logemail, setLogemail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -24,8 +23,6 @@ function Login() {
                 <h1 className="text-xl font-bold text-center text-white ">
                     Sign in
                                
-            {/* {email && <div> Email: {email}</div>}
-            {token && <div> token: {token}</div>} */}
                 </h1>
                 <form className="mt-6" onSubmit={(e) => e.preventDefault()}>
                     <div className="mb-2">
@@ -56,18 +53,15 @@ function Login() {
                             className="block w-full px-4 py-2 mt-2 text-white bg-gray-700 border rounded-md focus:border-purple-400 focus:ring-gray-700 focus:outline-none focus:ring focus:ring-opacity-40"
                         />
                     </div>
-                    {/* <a
 
-                        className="text-xs text-gray-400 hover:underline"
-                    >
-                        Forget Password?
-                    </a> */}
                     <div 
-                    // onClick={() =>
-                    //     dispatch(SigninAsync({ email: Logemail, password: password}))
-                    // }
                      className="mt-6">
-                        <button onClick={() => doLogin()} className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-900">
+                        <button onClick={(e) => {
+                                    if (e.target.form.checkValidity()) {
+                                        doLogin();
+                                    }
+                                }
+                            } className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-900">
                             Login
                         </button>
                     </div>

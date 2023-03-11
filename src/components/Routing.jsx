@@ -5,6 +5,8 @@ import Login from './Login';
 import Register from './Register';
 import Navbar from './Navbar';
 import Profile from './Profile';
+import RegisterSuccessful from './RegisterSuccessful';
+import ProductsByCategory from './ProductsByCategory';
 
 function Routing() {
   return (
@@ -16,7 +18,8 @@ function Routing() {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register/>} />
         <Route path='/profile' element={<Profile/>}></Route>
-
+        <Route path='/registerSuccessful' element={<RegisterSuccessful/>}></Route>
+        <Route path='/products-by-category' element={<ProductsByCategory/>}></Route>
       </Routes>
     </BrowserRouter>
     </div>

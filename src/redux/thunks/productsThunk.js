@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const fetchProducts = createAsyncThunk('products/fetch', async()=>{
-    const response = await axios.get('http://127.0.0.1:8000/product-list/');
+    const response = await axios.get('http://127.0.0.1:8000/product/');
 
     return response.data
 });
@@ -22,4 +22,9 @@ const removeProduct = createAsyncThunk('product/remove',async(product)=>{
     return product
 } )
 
-export {fetchProducts , addProduct ,updateProduct,removeProduct};
+const fetchProductsByCategory = createAsyncThunk('product/bycategory', async(category)=>{
+    const response = await axios.get(`http://127.0.0.1:8000/category/${category.id}/product`)
+    return response.data
+})
+
+export {fetchProducts , addProduct ,updateProduct,removeProduct,fetchProductsByCategory};

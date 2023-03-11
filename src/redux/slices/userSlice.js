@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import jwt_decode from "jwt-decode";
 import { RegisterAsync, SigninAsync, getUserDetails } from '../thunks/userThunk'
 
 const initialState = {
@@ -32,28 +31,26 @@ export const userSlice = createSlice({
     builder.addCase(SigninAsync.fulfilled, (state, action) => {
       state.data.token = action.payload.access;
       state.isLogged = true;
-      console.log("jwt_decode: ");
-      console.log(jwt_decode(action.payload.access))
-      // state.first_name= jwt_decode(action.payload.access).first_name
-      // state.last_name= jwt_decode(action.payload.access).last_name
-      // state.email=jwt_decode(action.payload.access).email
     });
-    builder.addCase(RegisterAsync.fulfilled, (state, action) => {
-
-      // state.first_name= jwt_decode(action.payload.access).first_name
-      // state.last_name= jwt_decode(action.payload.access).last_name
-      // state.email=jwt_decode(action.payload.access).email   
+    builder.addCase(SigninAsync.rejected,(state,action)=>{
+      throw action.error;
     });
-    builder.addCase(getUserDetails.pending, (action, state) => {
+    builder.addCase(RegisterAsync.rejected, (state, action) => {
+      throw action.error;
+    });
+    builder.addCase(getUserDetails.pending, (state, action) => {
       state.isLoading = true;
+      state.error = null;
     });
-    builder.addCase(getUserDetails.rejected, (action, state) => {
+    builder.addCase(getUserDetails.rejected, (state, action) => {
       state.error = action.error;
+      state.isLoading = false;
     })
     builder.addCase(getUserDetails.fulfilled, (state, action) => {
       state.data.first_name = action.payload.first_name;
       state.data.last_name = action.payload.last_name;
       state.data.email = action.payload.email;
+      state.isLoading = false;
     })
   },
 });

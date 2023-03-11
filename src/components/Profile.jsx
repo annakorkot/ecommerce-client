@@ -3,14 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getUserDetails } from '../redux/store';
 
 function Profile() {
-    const { data, error, isLogged, isLoading } = useSelector((state => {
+    const { data, error, isLogged, isLoading } = useSelector((state )=> {
         return state.user
-    }));
+    });
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getUserDetails(data.token))
-    }, []);
+    }, [dispatch, data.token]);
 
     if (isLoading) {
         return (
