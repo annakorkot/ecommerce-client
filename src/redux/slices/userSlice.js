@@ -7,6 +7,7 @@ const initialState = {
     last_name: "",
     email: "",
     token: "",
+    is_staff : false,
   },
   isLogged: false,
   isLoading: false,
@@ -24,6 +25,7 @@ export const userSlice = createSlice({
       state.data.first_name = "";
       state.data.last_name = "";
       state.data.email = "";
+      state.data.is_staff = false;
       state.isLogged = false;
     },
   },
@@ -50,6 +52,7 @@ export const userSlice = createSlice({
       state.data.first_name = action.payload.first_name;
       state.data.last_name = action.payload.last_name;
       state.data.email = action.payload.email;
+      state.data.is_staff = action.payload.is_staff;
       state.isLoading = false;
     })
   },

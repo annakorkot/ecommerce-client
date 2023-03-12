@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch} from 'react-redux';
-import { addProduct } from '../redux/store';
+import { addToCart } from '../redux/store';
 import { showCart } from '../redux/store';
 
 function Product({product}){
@@ -39,7 +39,7 @@ function Product({product}){
             </div>
 
             <button onClick={() => {
-                dispatch(addProduct(
+                dispatch(addToCart(
                     product
                 ));
                 dispatch(showCart());

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -8,12 +8,14 @@ import { logout } from '../redux/store';
 
 
 function Navbar() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const isStaff = useSelector((state) => {
+    return state.user.data.is_staff;
+  });
   const { isLoading, data, error } = useSelector((state) => {
     return state.categories;
-  })
+  });
 
   const userLogged = useSelector((state) => {
     return state.user.isLogged
@@ -47,7 +49,6 @@ function Navbar() {
                       return (
                         <Link onClick={() => {
                           dispatch(selectCategory(category));
-                          // navigate('/products-by-category')
                         }} key={category.id} className="px-5 py-3 hover:bg-gray-900 " to='/products-by-category'>{category.name}</Link>
                       )
                     })}
@@ -58,6 +59,8 @@ function Navbar() {
 
                 <li ><a className="hover:text-gray-200" >Collections</a></li>
                 <li><a className="hover:text-gray-200" >Contact Us</a></li>
+                {isStaff && <li><Link className="hover:text-gray-200" to='/add-product' >Add New Product </Link></li>}
+
               </ul>
 
               {/* <!-- Header Icons --> */}
