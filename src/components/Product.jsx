@@ -1,12 +1,19 @@
 import React from 'react'
-import { useDispatch} from 'react-redux';
-import { addToCart } from '../redux/store';
+import { useDispatch , useSelector} from 'react-redux';
+import { addToCart, selectProductToEdit } from '../redux/store';
 import { showCart } from '../redux/store';
+import { Link} from 'react-router-dom';
 
 function Product({product}){
+
+  const isStaff = useSelector((state) => {
+    return state.user.data.is_staff;
+  });
+
     const dispatch = useDispatch();
   return (
     <div  className="w-80 bg-white shadow rounded mx-10">
+      {isStaff&&<Link onClick={()=>{dispatch(selectProductToEdit(product))}} to='/edit-product'><button>edit</button></Link>}
           <div
             className="h-48 w-full bg-gray-200 flex flex-col justify-between p-4 bg-cover bg-center" style={{ backgroundImage: `url(${product.image})` }}>
             <div className="flex justify-between">
